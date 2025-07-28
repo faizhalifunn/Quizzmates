@@ -1,0 +1,90 @@
+import { createRouter, createWebHistory } from 'vue-router'
+// import HomeView from '../views/HomeView.vue'
+import Quiz from '../components/QuizzPage.vue'
+import Ox from '../components/result/ResultOx.vue'
+import Spice from '../components/result/ResultSpice.vue'
+import Pipa from '../components/result/ResultPipa.vue'
+import Flui from '../components/result/ResultFlui.vue'
+import Mvp from '../components/result/ResultMvp.vue'
+import Wire from '../components/result/ResultWire.vue'
+import Orfil from '../components/result/ResultOrfil.vue'
+import Tobo from '../components/result/ResultTobo.vue'
+import Poko from '../components/result/ResultPoko.vue'
+import Ignite from '../components/result/ResultIgnite.vue'
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'Quizz',
+      component: Quiz,
+    },
+    {
+      path: '/test',
+      name: 'Quiz',
+      component: Quiz,
+    },
+    {
+      path: '/result/SPICE',
+      name: 'ResultSpice',
+      component: Spice,
+    },
+    {
+      path: '/result/ox',
+      name: 'ResultOx',
+      component: Ox,
+    },
+    {
+      path: '/result/pipa',
+      name: 'ResultPipa',
+      component: Pipa,
+    },
+    {
+      path: '/result/flui',
+      name: 'ResultFlui',
+      component: Flui,
+    },
+    {
+      path: '/result/mvp',
+      name: 'ResultMvp',
+      component: Mvp,
+    },
+    {
+      path: '/result/wire',
+      name: 'ResultWire',
+      component: Wire,
+    },
+    {
+      path: '/result/orfil',
+      name: 'ResultOrfil',
+      component: Orfil,
+    },
+    {
+      path: '/result/tobo',
+      name: 'ResultTobo',
+      component: Tobo,
+    },
+    {
+      path: '/result/spice',
+      name: 'ResultPoko',
+      component: Poko,
+    },
+    {
+      path: '/result/ignite',
+      name: 'ResultIgnite',
+      component: Ignite,
+    },
+
+    {
+      path: '/about',
+      name: 'about',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AboutView.vue'),
+    },
+  ],
+})
+
+export default router
