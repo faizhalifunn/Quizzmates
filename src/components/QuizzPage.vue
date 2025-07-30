@@ -1,41 +1,35 @@
 <template>
   <div
-    class="min-h-screen font-sans text-gray-800 p-4 pt-24 pb-28 w-full flex items-center justify-center"
+    class="min-h-screen font-sans text-gray-800 p-4 pt-24 pb-28 w-full flex items-center justify-center bg-[url('@/assets/bgquizzmates.png')] bg-auto bg-repeat"
     style="background-color: #a64c8a"
   >
-    <!-- State Loading Awal -->
     <div v-if="loading" class="text-white text-xl font-bold text-center">
       Memuat pertanyaan...
     </div>
-
-    <!-- State Error -->
     <div v-else-if="error" class="text-center bg-white p-8 rounded-xl shadow-lg">
       <p class="text-red-600 text-xl font-bold">Oops! Terjadi kesalahan</p>
       <p class="text-gray-600 mt-2">{{ error }}</p>
-       <button @click="resetQuiz" class="mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+      <button @click="resetQuiz" class="mt-4 px-6 py-2 bg-[#A64C8A] text-white rounded-lg hover:bg-[#853c6e] transition">
         Coba Lagi
       </button>
     </div>
 
-    <!-- Konten Kuis -->
     <div
       v-else-if="paginatedQuestions.length"
-      class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 max-w-4xl text-center items-center mx-auto"
+      class="bg-white rounded-xl shadow-2xl p-4 sm:p-8 max-w-4xl text-center items-center mx-auto"
     >
-      <!-- Progress Bar -->
-      <div class="mb-6">
+      <div class="mb-6 pb-2">
         <p class="text-sm text-gray-500 mb-2">
           Halaman {{ currentPage + 1 }} dari {{ totalPages }}
         </p>
         <div class="w-full bg-gray-200 rounded-full h-2.5">
           <div
-            class="bg-purple-600 h-2.5 rounded-full transition-all duration-500"
-            :style="{ width: progress + '%' }"
+            class="h-2.5 rounded-full transition-all duration-500"
+            :style="{ width: progress + '%', backgroundColor: '#46A492' }"
           ></div>
         </div>
       </div>
       
-      <!-- Daftar Pertanyaan -->
       <div class="flex flex-col gap-8">
         <div
           v-for="q in paginatedQuestions"
@@ -45,14 +39,13 @@
           <p class="mb-5 text-base sm:text-lg font-extrabold text-gray-800">
             {{ q.pertanyaan }}
           </p>
-          <div class="flex justify-center items-center gap-3 sm:gap-4">
-            <span class="text-xs sm:text-sm text-gray-400 font-semibold"
-              >Tidak Setuju</span
-            >
+          <div class="flex justify-center items-center gap-1 sm:gap-2">
+            <span class="text-[10px] sm:text-xs text-gray-400 font-semibold text-center">Tidak<br>Setuju</span>
+            
             <label
               v-for="(pt, index) in pointScale(q.bobot)"
               :key="pt"
-              class="cursor-pointer flex items-center"
+              class="cursor-pointer flex items-center p-0.5 sm:p-1"
             >
               <input
                 type="radio"
@@ -68,14 +61,12 @@
                 ]"
               ></div>
             </label>
-            <span class="text-xs sm:text-sm text-gray-400 font-semibold"
-              >Sangat Setuju</span
-            >
+
+            <span class="text-[10px] sm:text-xs text-gray-400 font-semibold text-center">Sangat<br>Setuju</span>
           </div>
         </div>
       </div>
 
-      <!-- Tombol Navigasi -->
       <div
         class="mt-8 pt-6 border-t border-gray-200 flex justify-between items-center"
       >
@@ -89,9 +80,8 @@
         <button
           @click="nextPage"
           :disabled="!areAllAnswersOnPageSelected || isSubmitting"
-          class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed font-bold"
+          class="px-6 py-2 bg-[#46A492] text-white rounded-lg hover:bg-[#853c6e] transition disabled:opacity-50 disabled:cursor-not-allowed font-bold"
         >
-          <!-- GANTI TEKS TOMBOL BERDASARKAN STATUS -->
           <span v-if="isSubmitting">Mengirim...</span>
           <span v-else>{{ isLastPage ? "Kirim Jawaban" : "Lanjutkan" }}</span>
         </button>
@@ -174,13 +164,22 @@ export default {
       if (bobot === "TINGGI") return [-1, 0, 1, 2, 3, 4, 5];
       return [0, 1, 2, 3, 4, 5, 6]; // Fallback
     },
+    
     getCircleStyle(index) {
       const sizeClasses = [
-        "w-7 h-7", "w-6 h-6", "w-5 h-5", "w-4 h-4", "w-5 h-5", "w-6 h-6", "w-7 h-7"
+        "w-8 h-8 sm:w-10 sm:h-10",
+        "w-7 h-7 sm:w-8 sm:h-8",
+        "w-6 h-6 sm:w-7 sm:h-7",
+        "w-5 h-5 sm:w-6 sm:h-6",
+        "w-6 h-6 sm:w-7 sm:h-7",
+        "w-7 h-7 sm:w-8 sm:h-8",
+        "w-8 h-8 sm:w-10 sm:h-10",
       ];
+      
       let colorClasses = "";
       if (index <= 2) {
-        colorClasses = "border-purple-500 peer-checked:bg-purple-500";
+        // DIUBAH: Warna border dan background diubah ke #A64C8A
+        colorClasses = "border-[#A64C8A] peer-checked:bg-[#A64C8A]";
       } else if (index === 3) {
         colorClasses = "border-gray-400 peer-checked:bg-gray-400";
       } else {
@@ -188,7 +187,7 @@ export default {
       }
       return `${sizeClasses[index]} ${colorClasses}`;
     },
-    
+
     // --- METODE handleSubmit YANG DIMODIFIKASI ---
     async handleSubmit() {
       this.isSubmitting = true; // Mulai proses submit

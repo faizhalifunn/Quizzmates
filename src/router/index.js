@@ -11,17 +11,19 @@ import Orfil from '../components/result/ResultOrfil.vue'
 import Tobo from '../components/result/ResultTobo.vue'
 import Poko from '../components/result/ResultPoko.vue'
 import Ignite from '../components/result/ResultIgnite.vue'
+import Home from '../components/LandingPage.vue'
+import CreditPage from '../components/CreditPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'Quizz',
-      component: Quiz,
+      name: 'Home',
+      component: Home,
     },
     {
-      path: '/test',
+      path: '/Quiz',
       name: 'Quiz',
       component: Quiz,
     },
@@ -66,7 +68,7 @@ const router = createRouter({
       component: Tobo,
     },
     {
-      path: '/result/spice',
+      path: '/result/Poko',
       name: 'ResultPoko',
       component: Poko,
     },
@@ -74,6 +76,11 @@ const router = createRouter({
       path: '/result/ignite',
       name: 'ResultIgnite',
       component: Ignite,
+    },
+    {
+      path: '/credit',
+      name: 'CreditPage',
+      component: CreditPage,
     },
 
     {
